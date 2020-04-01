@@ -359,7 +359,7 @@ void R_ReadPointFile_f (void)
 	char	name[MAX_OSPATH];
 	byte	*color;
 
-	sprintf (name,"maps/%s.pts", sv.name);
+	_snprintf (name,sizeof(name),"maps/%s.pts", sv.name);
 
 	COM_FOpenFile (name, &f);
 	if (!f)

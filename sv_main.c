@@ -59,7 +59,7 @@ void SV_Init (void)
 	Cvar_RegisterVariable (&sv_nostep);
 
 	for (i=0 ; i<MAX_MODELS ; i++)
-		sprintf (localmodels[i], "*%i", i);
+		_snprintf (localmodels[i], sizeof(localmodels[i]), "*%i", i);
 }
 
 /*
@@ -192,7 +192,7 @@ void SV_SendServerinfo (client_t *client)
 	char			message[2048];
 
 	MSG_WriteByte (&client->message, svc_print);
-	sprintf (message, "%c\nVERSION %4.2f SERVER (%i CRC)\n", 2, VERSION, pr_crc);
+	_snprintf (message, sizeof(message), "%c\nVERSION %4.2f SERVER (%i CRC)\n", 2, VERSION, pr_crc);
 	MSG_WriteString (&client->message,message);
 
 	MSG_WriteByte (&client->message, svc_serverinfo);
@@ -204,7 +204,7 @@ void SV_SendServerinfo (client_t *client)
 	else
 		MSG_WriteByte (&client->message, GAME_COOP);
 
-	sprintf (message, pr_strings+sv.edicts->v.message);
+	_snprintf (message, sizeof(message), pr_strings+sv.edicts->v.message);
 
 	MSG_WriteString (&client->message,message);
 
@@ -1137,13 +1137,13 @@ void SV_SpawnServer (char *server)
 	char		mapnames[32];	// Tomaz - MapShots
 
 	// Tomaz - MapShots Begin
-	sprintf (mapshots,"gfx/mapshots/%s",server);
+	_snprintf (mapshots,sizeof(mapshots),"gfx/mapshots/%s",server);
 	map_snapshot = loadtextureimage(mapshots, false, false);
 	
 	if (!map_snapshot)
 		map_snapshot = loadtextureimage("gfx/mapshots/blankpic", false, false);
 
-	sprintf (mapnames,"gfx/mapshots/%sname",server);
+	_snprintf (mapnames,sizeof(mapshots),"gfx/mapshots/%sname",server);
 	map_snapname = loadtextureimage(mapnames, false, false);
 	if (!map_snapname)
 		map_snapname = loadtextureimage("gfx/mapshots/blankname", false, false);
@@ -1224,23 +1224,23 @@ void SV_SpawnServer (char *server)
 	// map loading here
 	//
 	strcpy (sv.name, server);
-	sprintf (sv.modelname,"maps/%s.bsp", server);
+	_snprintf (sv.modelname,sizeof(sv.modelname),"maps/%s.bsp", server);
 	sv.worldmodel = Mod_ForName (sv.modelname, false);
 	if (!sv.worldmodel)
 	{
-		sprintf (sv.modelname,"maps/cs/%s.bsp", server);
+		_snprintf (sv.modelname,sizeof(sv.modelname),"maps/cs/%s.bsp", server);
 		sv.worldmodel = Mod_ForName (sv.modelname, false);
 		if (!sv.worldmodel)
 		{
-			sprintf (sv.modelname,"maps/tfc/%s.bsp", server);
+			_snprintf (sv.modelname,sizeof(sv.modelname),"maps/tfc/%s.bsp", server);
 			sv.worldmodel = Mod_ForName (sv.modelname, false);
 			if (!sv.worldmodel)
 			{
-				sprintf (sv.modelname,"maps/hl/%s.bsp", server);
+				_snprintf (sv.modelname,sizeof(sv.modelname),"maps/hl/%s.bsp", server);
 				sv.worldmodel = Mod_ForName (sv.modelname, false);
 				if (!sv.worldmodel)
 				{
-					sprintf (sv.modelname,"%s.bsp", server);
+					_snprintf (sv.modelname,sizeof(sv.modelname),"%s.bsp", server);
 					Con_Printf ("Couldn't spawn server %s\n", sv.modelname);
 					sv.active = false;
 					return;

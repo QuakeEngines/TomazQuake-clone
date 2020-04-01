@@ -1089,7 +1089,7 @@ char    *va(char *format, ...)
 	static char             string[1024];
 	
 	va_start (argptr, format);
-	vsprintf (string, format,argptr);
+	_vsnprintf (string,sizeof(string),format,argptr);
 	va_end (argptr);
 
 	return string;  
@@ -1200,7 +1200,7 @@ void COM_WriteFile (char *filename, void *data, int len)
 	int             handle;
 	char    name[MAX_OSPATH];
 	
-	sprintf (name, "%s/%s", com_gamedir, filename);
+	_snprintf (name, sizeof(name),"%s/%s", com_gamedir, filename);
 
 	handle = Sys_FileOpenWrite (name);
 	if (handle == -1)
@@ -1331,7 +1331,7 @@ int COM_FindFile (char *filename, int *handle, FILE **file)
 		}
 		else
 		{               
-			sprintf (netpath, "%s/%s",search->filename, filename);
+			_snprintf (netpath, sizeof(netpath),"%s/%s",search->filename, filename);
 			
 			findtime = Sys_FileTime (netpath);
 			if (findtime == -1)
@@ -1343,9 +1343,9 @@ int COM_FindFile (char *filename, int *handle, FILE **file)
 			else
 			{	
 				if ((strlen(netpath) < 2) || (netpath[1] != ':'))
-					sprintf (cachepath,"%s%s", com_cachedir, netpath);
+					_snprintf (cachepath,sizeof(cachepath),"%s%s", com_cachedir, netpath);
 				else
-					sprintf (cachepath,"%s%s", com_cachedir, netpath+2);
+					_snprintf (cachepath,sizeof(cachepath),"%s%s", com_cachedir, netpath+2);
 
 				cachetime = Sys_FileTime (cachepath);
 			
@@ -1611,7 +1611,7 @@ void COM_AddGameDirectory (char *dir)
 	com_searchpaths = search;
 
 	// Tomaz - ANY Pak File Begin
-	sprintf (dirstring, "%s/*.pak", dir);
+	_snprintf (dirstring, sizeof(dirstring),"%s/*.pak", dir);
 	handle = _findfirst (dirstring, &fileinfo);
 	if (handle != -1)
 	{
@@ -1619,7 +1619,7 @@ void COM_AddGameDirectory (char *dir)
 		{
 			if (fileinfo.name[0] == '.')
 				continue;
-			sprintf(pakfile,"%s/%s", dir, fileinfo.name);
+			_snprintf(pakfile,sizeof(pakfile),"%s/%s", dir, fileinfo.name);
 			pak = COM_LoadPackFile (pakfile);
 			if (!pak)
 				break;
@@ -1707,7 +1707,7 @@ void COM_InitFilesystem (void)
 	{
 		com_modified = true;
 		COM_AddGameDirectory (va("%s/%s", basedir, com_argv[i+1]));
-		sprintf (moddir,"%s",com_argv[i+1]);
+		_snprintf (moddir,sizeof(moddir),"%s",com_argv[i+1]);
 	}
 
 //

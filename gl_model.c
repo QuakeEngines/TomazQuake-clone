@@ -436,7 +436,7 @@ void Mod_LoadQ1Textures (lump_t *l)
 
 		tx->rs			= GetRSForName(mt->name);
 
-		sprintf (texname, "textures/%s", tx->name);
+		_snprintf (texname, sizeof(texname),"textures/%s", tx->name);
 
 	// NOTE: uncommenting this will let quake print all textures used in a map to the console
 	//	Con_Printf("%s\n", texname);
@@ -508,7 +508,7 @@ void Mod_LoadQ1Textures (lump_t *l)
 						if (fullbrights)
 						{
 							data2 = malloc (tx->width * tx->height);
-							sprintf (texname, "fbrm_%s", tx->name);
+							_snprintf (texname, sizeof(texname),"fbrm_%s", tx->name);
 
 							for (j = 0;j < size;j++)
 							{
@@ -691,7 +691,7 @@ void Mod_LoadHLTextures (lump_t *l)
 
 		tx->rs			= GetRSForName(mt->name);
 
-		sprintf (texname, "textures/%s", tx->name);
+		_snprintf (texname, sizeof(texname), "textures/%s", tx->name);
 
 	// NOTE: uncommenting this will let quake print all textures used in a map to the console
 	//	Con_Printf("%s\n", texname);
@@ -1742,7 +1742,7 @@ void Mod_LoadBrushModel (model_t *mod, void *buffer)
 		{	// duplicate the basic information
 			char	name[10];
 
-			sprintf (name, "*%i", i+1);
+			_snprintf (name, sizeof(name),"*%i", i+1);
 			loadmodel = Mod_FindName (name);
 			*loadmodel = *mod;
 			strcpy (loadmodel->name, name);

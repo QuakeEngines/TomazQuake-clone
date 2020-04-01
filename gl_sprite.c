@@ -95,12 +95,12 @@ void * Mod_LoadSpriteFrame (void * pin, mspriteframe_t **ppframe, int framenum)
 
 	// Tomaz - TGA Begin
 	COM_StripExtension(loadmodel->name, sprite); 
-	sprintf (name, "%s_%i", sprite, framenum);
+	_snprintf (name, sizeof(name),"%s_%i", sprite, framenum);
 
 	pspriteframe->gl_texturenum = loadtextureimage (name, false, true);
 	if (pspriteframe->gl_texturenum == 0)// did not find a matching TGA...		
 	{
-		sprintf (name, "%s_%i", loadmodel->name, framenum);	
+		_snprintf (name, sizeof(name),"%s_%i", loadmodel->name, framenum);	
 		pspriteframe->gl_texturenum = GL_LoadTexture (name, width, height, (byte *)(pinframe + 1), true, true, 1);
 	}
 	// Tomaz - TGA End

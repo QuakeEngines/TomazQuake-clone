@@ -466,7 +466,7 @@ int GL_LoadTexture (char *identifier, int width, int height, byte *data, qboolea
 	if (!identifier[0])
 	{
 		Con_Printf("GL_LoadTexture: no identifier\n");
-		sprintf (identifier, "%s_%i", "argh", argh);
+		_snprintf (identifier, sizeof(identifier),"%s_%i", "argh", argh);
 		argh++;
 	}
 
@@ -479,7 +479,7 @@ int GL_LoadTexture (char *identifier, int width, int height, byte *data, qboolea
 			if (crc != glt->crc || width != glt->width || height != glt->height)
 			{
 				Con_DPrintf("GL_LoadTexture: cache mismatch\n");
-				sprintf (identifier, "%s_%i", identifier, argh2);
+				_snprintf (identifier, sizeof(identifier),"%s_%i", identifier, argh2);
 				argh2++;
 				goto GL_LoadTexture_setup;
 			}
@@ -859,22 +859,22 @@ byte* loadimagepixels (char* filename, qboolean complain)
 		if (*c == '*')
 			*c = '#';
 
-	sprintf (name, "textures/%s.tga", basename);
+	_snprintf (name, sizeof(name), "textures/%s.tga", basename);
 	COM_FOpenFile (name, &f);
 	if (f)
 		return LoadTGA (f, name);
 
-	sprintf (name, "textures/%s.pcx", basename);
+	_snprintf (name, sizeof(name), "textures/%s.pcx", basename);
 	COM_FOpenFile (name, &f);
 	if (f)
 		return LoadPCX (f, name);
 
-	sprintf (name, "%s.tga", basename);
+	_snprintf (name, sizeof(name), "%s.tga", basename);
 	COM_FOpenFile (name, &f);
 	if (f)
 		return LoadTGA (f, name);
 
-	sprintf (name, "%s.pcx", basename);
+	_snprintf (name, sizeof(name), "%s.pcx", basename);
 	COM_FOpenFile (name, &f);
 	if (f)
 		return LoadPCX (f, name);

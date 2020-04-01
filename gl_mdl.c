@@ -452,7 +452,7 @@ void *Mod_LoadAllSkins (int numskins, daliasskintype_t *pskintype)
 			// TGA Begin
 			// we check to see if a tga version of the skin exists, drawing happens elsewhere
 			COM_StripExtension(loadmodel->name, model);
-			sprintf (name, "%s_%i", model, i);
+			_snprintf (name, sizeof(name),"%s_%i", model, i);
 
 			pheader->transparent = true;
 
@@ -520,7 +520,7 @@ void *Mod_LoadAllSkins (int numskins, daliasskintype_t *pskintype)
 					data = (byte *)(pskintype);
 					memcpy (texels, data, s);
 				}
-				sprintf (name, "%s_%i_%i", loadmodel->name, i,j);
+				_snprintf (name, sizeof(name),"%s_%i_%i", loadmodel->name, i,j);
 				pheader->gl_texturenum[i][j&3] = 
 					GL_LoadTexture (name, pheader->skinwidth, pheader->skinheight, data, true, false, 1);
 				

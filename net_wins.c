@@ -110,7 +110,7 @@ void WINS_GetLocalAddress()
 	myAddr = *(int *)local->h_addr_list[0];
 
 	addr = ntohl(myAddr);
-	sprintf(my_tcpip_address, "%d.%d.%d.%d", (addr >> 24) & 0xff, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
+	_snprintf(my_tcpip_address, sizeof(my_tcpip_address),"%d.%d.%d.%d", (addr >> 24) & 0xff, (addr >> 16) & 0xff, (addr >> 8) & 0xff, addr & 0xff);
 }
 
 
@@ -402,9 +402,9 @@ int WINS_Read (int socket, byte *buf, int len, struct qsockaddr *addr)
 	ret = precvfrom (socket, buf, len, 0, (struct sockaddr *)addr, &addrlen);
 	if (ret == -1)
 	{
-		int errno = pWSAGetLastError();
+		int blargherrno = pWSAGetLastError();
 
-		if (errno == WSAEWOULDBLOCK || errno == WSAECONNREFUSED)
+		if (blargherrno == WSAEWOULDBLOCK || blargherrno == WSAECONNREFUSED)
 			return 0;
 
 	}
@@ -469,7 +469,7 @@ char *WINS_AddrToString (struct qsockaddr *addr)
 	int haddr;
 
 	haddr = ntohl(((struct sockaddr_in *)addr)->sin_addr.s_addr);
-	sprintf(buffer, "%d.%d.%d.%d:%d", (haddr >> 24) & 0xff, (haddr >> 16) & 0xff, (haddr >> 8) & 0xff, haddr & 0xff, ntohs(((struct sockaddr_in *)addr)->sin_port));
+	_snprintf(buffer, sizeof(buffer),"%d.%d.%d.%d:%d", (haddr >> 24) & 0xff, (haddr >> 16) & 0xff, (haddr >> 8) & 0xff, haddr & 0xff, ntohs(((struct sockaddr_in *)addr)->sin_port));
 	return buffer;
 }
 

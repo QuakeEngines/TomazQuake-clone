@@ -25,6 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef _MSC_VER
 #include <unistd.h>
 #endif
+
+#define		_CRT_SECURE_NO_WARNINGS
+
 #include <fcntl.h>
 #include "quakedef.h"
 
@@ -358,7 +361,7 @@ FILE *logfile;
 
 void Con_OpenDebugLog(void)
 {
-	logfile = fopen(va("%s/TQ1.48.log", com_gamedir),"w");
+	logfile = fopen(va("%s/TQ1.481.log", com_gamedir),"w");
 }
 
 void Con_DebugLog(const char *fmt, ...)
@@ -384,8 +387,8 @@ Con_Printf
 Handles cursor positioning, line wrapping, etc
 ================
 */
-#define	MAXPRINTMSG	4096
-// FIXME: make a buffer size safe vsprintf?
+#define	MAXPRINTMSG	16384
+// FIXME: make a buffer size safe _vsnprintf?
 void Con_Printf (char *fmt, ...)
 {
 	va_list		argptr;
@@ -393,7 +396,7 @@ void Con_Printf (char *fmt, ...)
 	static qboolean	inupdate;
 	
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	_vsnprintf (msg,sizeof(msg),fmt,argptr);
 	va_end (argptr);
 	
 // also echo to debugging console
@@ -429,7 +432,7 @@ void Con_DPrintf (char *fmt, ...)
 		return;			// don't confuse non-developers with techie stuff...
 
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	_vsnprintf (msg,sizeof(msg),fmt,argptr);
 	va_end (argptr);
 	
 	Con_Printf ("%s", msg);
@@ -450,7 +453,7 @@ void Con_SafePrintf (char *fmt, ...)
 	int			temp;
 		
 	va_start (argptr,fmt);
-	vsprintf (msg,fmt,argptr);
+	_vsnprintf (msg,sizeof(msg),fmt,argptr);
 	va_end (argptr);
 
 	temp = scr_disabled_for_loading;

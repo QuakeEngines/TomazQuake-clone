@@ -281,16 +281,16 @@ void Sys_Error (char *error, ...)
 		in_sys_error3 = 1;
 
 	va_start (argptr, error);
-	vsprintf (text, error, argptr);
+	_vsnprintf (text, sizeof(text), error, argptr);
 	va_end (argptr);
 
 	if (isDedicated)
 	{
 		va_start (argptr, error);
-		vsprintf (text, error, argptr);
+		_vsnprintf (text, sizeof(text), error, argptr);
 		va_end (argptr);
 
-		sprintf (text2, "ERROR: %s\n", text);
+		_snprintf (text2, sizeof(text2), "ERROR: %s\n", text);
 		WriteFile (houtput, text5, strlen (text5), &dummy, NULL);
 		WriteFile (houtput, text4, strlen (text4), &dummy, NULL);
 		WriteFile (houtput, text2, strlen (text2), &dummy, NULL);
@@ -349,7 +349,7 @@ void Sys_Printf (char *fmt, ...)
 	if (isDedicated)
 	{
 		va_start (argptr,fmt);
-		vsprintf (text, fmt, argptr);
+		_vsnprintf (text, sizeof(text), fmt, argptr);
 		va_end (argptr);
 
 		WriteFile(houtput, text, strlen (text), &dummy, NULL);	

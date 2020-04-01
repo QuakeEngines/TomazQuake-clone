@@ -848,7 +848,7 @@ void Key_Event (int key, qboolean down)
 		kb = keybindings[key];
 		if (kb && kb[0] == '+')
 		{
-			sprintf (cmd, "-%s %i\n", kb+1, key);
+			_snprintf (cmd, sizeof(cmd),"-%s %i\n", kb+1, key);
 			Cbuf_AddText (cmd);
 		}
 		if (keyshift[key] != key)
@@ -856,7 +856,7 @@ void Key_Event (int key, qboolean down)
 			kb = keybindings[keyshift[key]];
 			if (kb && kb[0] == '+')
 			{
-				sprintf (cmd, "-%s %i\n", kb+1, key);
+				_snprintf (cmd, sizeof(cmd),"-%s %i\n", kb+1, key);
 				Cbuf_AddText (cmd);
 			}
 		}
@@ -884,7 +884,7 @@ void Key_Event (int key, qboolean down)
 		{
 			if (kb[0] == '+')
 			{	// button commands add keynum as a parm
-				sprintf (cmd, "%s %i\n", kb, key);
+				_snprintf (cmd, sizeof(cmd),"%s %i\n", kb, key);
 				Cbuf_AddText (cmd);
 			}
 			else

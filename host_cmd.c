@@ -456,7 +456,7 @@ void Host_SavegameComment (char *text)
 	for (i=0 ; i<SAVEGAME_COMMENT_LENGTH ; i++)
 		text[i] = ' ';
 	memcpy (text, cl.levelname, strlen(cl.levelname));
-	sprintf (kills,"kills:%3i/%3i", cl.stats[STAT_MONSTERS], cl.stats[STAT_TOTALMONSTERS]);
+	_snprintf (kills,sizeof(kills),"kills:%3i/%3i", cl.stats[STAT_MONSTERS], cl.stats[STAT_TOTALMONSTERS]);
 	memcpy (text+22, kills, strlen(kills));
 // convert space to _ to make stdio happy
 	for (i=0 ; i<SAVEGAME_COMMENT_LENGTH ; i++)
@@ -520,7 +520,7 @@ void Host_Savegame_f (void)
 		}
 	}
 
-	sprintf (name, "%s/%s", com_gamedir, Cmd_Argv(1));
+	_snprintf (name, sizeof(name),"%s/%s", com_gamedir, Cmd_Argv(1));
 	COM_DefaultExtension (name, ".sav");
 	
 	Con_Printf ("Saving game to %s...\n", name);
@@ -591,7 +591,7 @@ void Host_Loadgame_f (void)
 
 	cls.demonum = -1;		// stop demo loop in case this fails
 
-	sprintf (name, "%s/%s", com_gamedir, Cmd_Argv(1));
+	_snprintf (name, sizeof(name),"%s/%s", com_gamedir, Cmd_Argv(1));
 	COM_DefaultExtension (name, ".sav");
 	
 // we can't call SCR_BeginLoadingPlaque, because too much stack space has
@@ -796,9 +796,9 @@ void Host_Say(qboolean teamonly)
 
 // turn on color set 1
 	if (!fromServer)
-		sprintf (text, "%c%s: ", 1, save->name);
+		_snprintf (text, sizeof(text),"%c%s: ", 1, save->name);
 	else
-		sprintf (text, "%c<%s> ", 1, hostname.string);
+		_snprintf (text, sizeof(text),"%c<%s> ", 1, hostname.string);
 
 	j = sizeof(text) - 2 - Q_strlen(text);  // -2 for /n and null terminator
 	if (Q_strlen(p) > j)

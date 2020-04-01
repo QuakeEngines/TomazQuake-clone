@@ -116,13 +116,13 @@ qpic_t *Draw_PicFromWad (char *name)
 	p = W_GetLumpName (name);
 	gl = (glpic_t *)p->data;
 
-	sprintf (newname,"gfx/wad/%s.tga", name);
+	_snprintf (newname,sizeof(newname),"gfx/wad/%s.tga", name);
 
 	COM_FOpenFile (newname, &f);
 
 	if (!f)
 	{
-		sprintf (newname,"gfx/wad/%s.pcx", name);
+		_snprintf (newname,sizeof(newname),"gfx/wad/%s.pcx", name);
 
 		COM_FOpenFile (newname, &f);
 	}
@@ -131,7 +131,7 @@ qpic_t *Draw_PicFromWad (char *name)
 	{
 		fclose (f);
 
-		sprintf (newname,"gfx/wad/%s",name);
+		_snprintf (newname,sizeof(newname),"gfx/wad/%s",name);
 
 		gl->texnum = loadtextureimage(newname, false, false);
 
@@ -322,7 +322,7 @@ void Draw_Init (void)
 	// Load the 32 caustic image files
 	for(i=0; i<32; i++)
 	{
-		sprintf(caustics, "textures/caustics/caust%i", i);
+		_snprintf(caustics, sizeof(caustics), "textures/caustics/caust%i", i);
 		causticstexture[i] = loadtextureimage(caustics, false, true);
 	}
 }
@@ -493,7 +493,7 @@ void Draw_ConsoleBackground (int lines)
 
 	RS_DrawPic(0,lines - vid.height, conback);
 
-	sprintf (version, "TomazQuake %.2f", (float) TOMAZQUAKE_VERSION);
+	_snprintf (version, sizeof(version), "TomazQuake %.3f", (float) TOMAZQUAKE_VERSION);
 
 	Draw_String(vid.width - strlen(version)*8 - 8, lines - 16, version, 0);
 }

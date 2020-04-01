@@ -243,9 +243,9 @@ int WIPX_Read (int handle, byte *buf, int len, struct qsockaddr *addr)
 	ret = precvfrom (socket, packetBuffer, len+4, 0, (struct sockaddr *)addr, &addrlen);
 	if (ret == -1)
 	{
-		int errno = pWSAGetLastError();
+		int blargherrno = pWSAGetLastError();
 
-		if (errno == WSAEWOULDBLOCK || errno == WSAECONNREFUSED)
+		if (blargherrno == WSAEWOULDBLOCK || blargherrno == WSAECONNREFUSED)
 			return 0;
 
 	}
@@ -294,7 +294,7 @@ char *WIPX_AddrToString (struct qsockaddr *addr)
 {
 	static char buf[28];
 
-	sprintf(buf, "%02x%02x%02x%02x:%02x%02x%02x%02x%02x%02x:%u",
+	_snprintf(buf, sizeof(buf),"%02x%02x%02x%02x:%02x%02x%02x%02x%02x%02x:%u",
 		((struct sockaddr_ipx *)addr)->sa_netnum[0] & 0xff,
 		((struct sockaddr_ipx *)addr)->sa_netnum[1] & 0xff,
 		((struct sockaddr_ipx *)addr)->sa_netnum[2] & 0xff,
@@ -356,7 +356,7 @@ int WIPX_GetSocketAddr (int handle, struct qsockaddr *addr)
 	Q_memset(addr, 0, sizeof(struct qsockaddr));
 	if(pgetsockname(socket, (struct sockaddr *)addr, &addrlen) != 0)
 	{
-		int errno = pWSAGetLastError();
+		int blargherrno = pWSAGetLastError();
 	}
 
 	return 0;
@@ -381,12 +381,12 @@ int WIPX_GetAddrFromName(char *name, struct qsockaddr *addr)
 
 	if (n == 12)
 	{
-		sprintf(buf, "00000000:%s:%u", name, net_hostport);
+		_snprintf(buf, sizeof(buf),"00000000:%s:%u", name, net_hostport);
 		return WIPX_StringToAddr (buf, addr);
 	}
 	if (n == 21)
 	{
-		sprintf(buf, "%s:%u", name, net_hostport);
+		_snprintf(buf, sizeof(buf),"%s:%u", name, net_hostport);
 		return WIPX_StringToAddr (buf, addr);
 	}
 	if (n > 21 && n <= 27)

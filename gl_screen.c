@@ -354,7 +354,7 @@ void SCR_DrawFPS (void)
 
 	if (cl.time > fpscounter)
 	{
-		sprintf(temp, "%3i FPS", calc);
+		_snprintf(temp, sizeof(temp),"%3i FPS", calc);
 		fpscounter = cl.time + 0.1;
 	}
 
@@ -554,7 +554,7 @@ void SCR_ScreenShot_f (void)
 // 
 // find a file name to save it to 
 // 
-	sprintf (checkname, "%s/screenies", com_gamedir);
+	_snprintf (checkname, sizeof(checkname), "%s/screenies", com_gamedir);
 	Sys_mkdir (checkname);	
 
 	strcpy(tganame,"Tomaz00.tga");
@@ -563,7 +563,7 @@ void SCR_ScreenShot_f (void)
 	{
 		tganame[5] = (i/10)%10 + '0';
 		tganame[6] = (i   )%10 + '0'; 			
-		sprintf (checkname, "%s/screenies/%s", com_gamedir, tganame);
+		_snprintf (checkname, sizeof(checkname), "%s/screenies/%s", com_gamedir, tganame);
 		if (Sys_FileTime(checkname) == -1)
 			break;	// file doesn't exist
 	} 

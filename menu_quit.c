@@ -84,7 +84,7 @@ void M_Quit_Draw (void)
 	}
 
 	M_DrawTextBox (0, 0, 38, 23);
-	M_PrintWhite (16, 12,	"         TQ 1.48 By Tomaz         \n");
+	M_PrintWhite (16, 12,	"         TQ 1.481 By Tomaz        \n");
 	M_PrintWhite (16, 28,	"         Special Thanks To        \n");
 	M_Print	(16, 44,		"  LordHavoc     Heffo     Fett    \n");
 	M_Print (16, 52,		"  Phoenix       Radix     MrG     \n");
@@ -97,5 +97,5 @@ void M_Quit_Draw (void)
 	M_Print (16, 124,		"  illusion      Midgar    jAGO    \n");
 	M_Print (16, 132,		"  KrimZon       Akuma     Horn    \n");
 	M_Print (16, 140,		"  dakilla       Krust     Harb    \n");
-	M_PrintWhite (16, 180,	"       Press Y To Stop Reading    \n");
+	M_PrintWhite (16, 180,	"      Press Y To Stop Reading     \n");
 }

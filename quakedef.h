@@ -22,9 +22,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	QUAKE_GAME
 
 #define	VERSION				1.09
-#define	TOMAZQUAKE_VERSION	1.48
+#define	TOMAZQUAKE_VERSION	1.481
 
 #define	GAMENAME	"id1"
+
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <math.h>
 #include <string.h>

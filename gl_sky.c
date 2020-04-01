@@ -111,11 +111,11 @@ void R_LoadSkys (void)
 
 	for (i=0 ; i<6 ; i++)
 	{
-		sprintf (name, "gfx/env/%s%s", skyname, suf[i]);
+		_snprintf (name, sizeof(name),"gfx/env/%s%s", skyname, suf[i]);
 		skytexture[i] = loadtextureimage(name, false ,true);
 		if (skytexture[i] == 0)
 		{
-			sprintf (name, "gfx/env/tomazsky%s", suf[i]);
+			_snprintf (name, sizeof(name),"gfx/env/tomazsky%s", suf[i]);
 			skytexture[i] = loadtextureimage(name, true ,true);
 		}
 	}

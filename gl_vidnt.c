@@ -24,7 +24,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "resource.h"
 #include <commctrl.h>
 
-#define MAX_MODE_LIST	30
+#define MAX_MODE_LIST	256
 #define VID_ROW_SIZE	3
 #define WARP_WIDTH		320
 #define WARP_HEIGHT		200
@@ -1333,7 +1333,7 @@ char *VID_GetModeDescription (int mode)
 	}
 	else
 	{
-		sprintf (temp, "Desktop resolution (%dx%d)",
+		_snprintf (temp, sizeof(temp),"Desktop resolution (%dx%d)",
 				 modelist[MODE_FULLSCREEN_DEFAULT].width,
 				 modelist[MODE_FULLSCREEN_DEFAULT].height);
 		pinfo = temp;
@@ -1358,11 +1358,11 @@ char *VID_GetExtModeDescription (int mode)
 	{
 		if (!leavecurrentmode)
 		{
-			sprintf(pinfo,"%s fullscreen", pv->modedesc);
+			_snprintf(pinfo,sizeof(pinfo),"%s fullscreen", pv->modedesc);
 		}
 		else
 		{
-			sprintf (pinfo, "Desktop resolution (%dx%d)",
+			_snprintf (pinfo, sizeof(pinfo),"Desktop resolution (%dx%d)",
 					 modelist[MODE_FULLSCREEN_DEFAULT].width,
 					 modelist[MODE_FULLSCREEN_DEFAULT].height);
 		}
@@ -1370,9 +1370,9 @@ char *VID_GetExtModeDescription (int mode)
 	else
 	{
 		if (modestate == MS_WINDOWED)
-			sprintf(pinfo, "%s windowed", pv->modedesc);
+			_snprintf(pinfo, sizeof(pinfo), "%s windowed", pv->modedesc);
 		else
-			sprintf(pinfo, "windowed");
+			_snprintf(pinfo, sizeof(pinfo), "windowed");
 	}
 
 	return pinfo;
@@ -1530,7 +1530,7 @@ void VID_InitDIB (HINSTANCE hInstance)
 		modelist[0].height = modelist[0].width * 3/4; // height is width * 0.75
 	}
 
-	sprintf (modelist[0].modedesc, "%dx%d",
+	_snprintf (modelist[0].modedesc, sizeof(modelist[0].modedesc),"%dx%d",
 			 modelist[0].width, modelist[0].height);
 
 	modelist[0].modenum = MODE_WINDOWED;
@@ -1584,7 +1584,7 @@ void VID_InitFullDIB (HINSTANCE hInstance)
 				modelist[nummodes].dib = 1;
 				modelist[nummodes].fullscreen = 1;
 				modelist[nummodes].bpp = devmode.dmBitsPerPel;
-				sprintf (modelist[nummodes].modedesc, "%dx%dx%d",
+				_snprintf (modelist[nummodes].modedesc, sizeof(modelist[nummodes].modedesc),"%dx%dx%d",
 						 devmode.dmPelsWidth, devmode.dmPelsHeight,
 						 devmode.dmBitsPerPel);
 
@@ -1596,7 +1596,7 @@ void VID_InitFullDIB (HINSTANCE hInstance)
 					{
 						modelist[nummodes].width >>= 1;
 						modelist[nummodes].halfscreen = 1;
-						sprintf (modelist[nummodes].modedesc, "%dx%dx%d",
+						_snprintf (modelist[nummodes].modedesc, sizeof(modelist[nummodes].modedesc),"%dx%dx%d",
 								 modelist[nummodes].width,
 								 modelist[nummodes].height,
 								 modelist[nummodes].bpp);
@@ -1649,7 +1649,7 @@ void VID_InitFullDIB (HINSTANCE hInstance)
 				modelist[nummodes].dib = 1;
 				modelist[nummodes].fullscreen = 1;
 				modelist[nummodes].bpp = devmode.dmBitsPerPel;
-				sprintf (modelist[nummodes].modedesc, "%dx%dx%d",
+				_snprintf (modelist[nummodes].modedesc, sizeof(modelist[nummodes].modedesc),"%dx%dx%d",
 						 devmode.dmPelsWidth, devmode.dmPelsHeight,
 						 devmode.dmBitsPerPel);
 
@@ -1757,6 +1757,9 @@ void	VID_Init (unsigned char *palette)
 	int		basenummodes, width, height, bpp, findbpp, done;
 	HDC		hdc;
 	DEVMODE	devmode;
+
+	width	= 640;
+	height	= 480;
 
 	memset(&devmode, 0, sizeof(devmode));
 
@@ -1911,7 +1914,7 @@ void	VID_Init (unsigned char *palette)
 						modelist[nummodes].dib = 1;
 						modelist[nummodes].fullscreen = 1;
 						modelist[nummodes].bpp = bpp;
-						sprintf (modelist[nummodes].modedesc, "%dx%dx%d",
+						_snprintf (modelist[nummodes].modedesc, sizeof(modelist[nummodes].modedesc),"%dx%dx%d",
 								 devmode.dmPelsWidth, devmode.dmPelsHeight,
 								 devmode.dmBitsPerPel);
 
