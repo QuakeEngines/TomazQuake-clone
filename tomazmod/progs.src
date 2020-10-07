@@ -1,0 +1,45 @@
+../progs.dat
+
+defs.qc
+frikbot/bot.qc
+frikbot/bot_way.qc
+frikbot/bot_ai.qc
+frikbot/bot_misc.qc
+frikbot/bot_phys.qc
+frikbot/bot_move.qc
+subs.qc
+fight.qc
+ai.qc
+combat.qc
+items.qc
+shells.qc		// Shell ejecting
+bullet.qc		// Bullet holes
+weapons.qc
+world.qc
+func_ladder.qc		// HL Ladders
+client.qc
+player.qc
+monsters.qc
+doors.qc
+buttons.qc
+triggers.qc
+plats.qc
+misc.qc
+efx.qc			// Snow Rain and Lightning
+
+ogre.qc
+demon.qc
+shambler.qc
+knight.qc
+soldier.qc
+wizard.qc
+dog.qc
+zombie.qc
+boss.qc
+
+tarbaby.qc		// registered
+hknight.qc		// registered
+fish.qc			// registered
+shalrath.qc		// registered
+enforcer.qc		// registered
+oldone.qc		// registered
